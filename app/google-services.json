@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "791909812949",
+    "project_id": "green-bills-7d584"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791909812949:android:7152e18651b462c0",
+        "android_client_info": {
+          "package_name": "com.greenbills.www.greenbills"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791909812949-nfchkp55t6u66vrar8al3agc30orbc8p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greenbills.www.greenbills",
+            "certificate_hash": "848816DD921146522B927001F5EC0C3F41350B72"
+          }
+        },
+        {
+          "client_id": "791909812949-hm3alpiu2mjradd9lcr1uskmtvq313hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_ydYtBNXLHzJZpsB_MiyU28_SU6OBnqE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
