@@ -3,28 +3,11 @@ package com.greenbills.www.greenbills;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -36,9 +19,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 
 public class Login extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener{
@@ -156,8 +136,10 @@ public class Login extends AppCompatActivity implements
                         userPhotoURL.length() - 2)
                         + PROFILE_PIC_SIZE;
 
-                new DownloadImage(getApplicationContext()).execute(userPhotoURL);
+                new DownloadImage(Login.this).execute(userPhotoURL);
             }
+
+            Toast.makeText(Login.this,"SignIN Successfull!!",Toast.LENGTH_SHORT).show();
         }
     }
     // [END handleSignInResult]
