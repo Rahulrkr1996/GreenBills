@@ -3,7 +3,12 @@ package com.greenbills.www.greenbills;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,23 +24,35 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.greenbills.www.greenbills.Models.User;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Login extends AppCompatActivity implements
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
     private final int PROFILE_PIC_SIZE = 50;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
-    private String userName,userEmail,userPhotoURL;
-    private SignInButton  google_SignINButton;
+    private SignInButton google_SignINButton;
+    private final int SAVE_PROFILE_PICTURE = 0;
+    private Bitmap profilePicture = null;
+    private User currentUser = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        google_SignINButton = (SignInButton)findViewById(R.id.google_SignINButton);
+        google_SignINButton = (SignInButton) findViewById(R.id.google_SignINButton);
         google_SignINButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,27 +138,45 @@ public class Login extends AppCompatActivity implements
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
 
-
-            Log.d(TAG, acct.getDisplayName());
-
-            //assigning username and email to send
-            userEmail = acct.getEmail();
-            userName = acct.getDisplayName();
-            userPhotoURL = acct.getPhotoUrl().toString();
-
-
-            if(userPhotoURL!=null) {
-
-                userPhotoURL = userPhotoURL.substring(0,
-                        userPhotoURL.length() - 2)
-                        + PROFILE_PIC_SIZE;
-
-                new DownloadImage(Login.this).execute(userPhotoURL);
+            if (acct.getPhotoUrl() != null) {
+                // Downloading image and saving it to ext storage
+                if(currentUser==null) {
+                    currentUser = new User(1, acct.getDisplayName(), acct.getEmail(), acct.getPhotoUrl().toString());
+                    new LoadImage().execute(acct.getPhotoUrl().toString());
+                    currentUser.save();
+                }else{
+                    currentUser.user_id = 1;
+                    currentUser.user_name = acct.getDisplayName();
+                    currentUser.user_email = acct.getEmail();
+                    currentUser.user_photoURL = acct.getPhotoUrl().toString();
+                    new LoadImage().execute(acct.getPhotoUrl().toString());
+                    currentUser.save();
+                }
+            } else {
+                if (currentUser == null) {
+                    currentUser = new User(1, acct.getDisplayName(), acct.getEmail(), acct.getPhotoUrl().toString());
+                    currentUser.save();
+                } else {
+                    currentUser.user_id = 1;
+                    currentUser.user_name = acct.getDisplayName();
+                    currentUser.user_email = acct.getEmail();
+                    currentUser.user_photoURL = acct.getPhotoUrl().toString();
+                    currentUser.save();
+                }
             }
 
-            Toast.makeText(Login.this,"SignIN Successfull!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this, "User details saved for " + currentUser.user_name, Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    Intent i = new Intent(Login.this, HomePage.class);
+                    startActivity(i);
+                }
+            }, 1500);
         }
     }
+
     // [END handleSignInResult]
 
     // [START signIn]
@@ -183,7 +218,7 @@ public class Login extends AppCompatActivity implements
     public void onConnectionFailed(ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
-        Toast.makeText(Login.this,"Login Failed!! Chec internet connectivity...",Toast.LENGTH_SHORT).show();
+        Toast.makeText(Login.this, "Login Failed!! Chec internet connectivity...", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
     }
 
@@ -202,4 +237,79 @@ public class Login extends AppCompatActivity implements
             mProgressDialog.hide();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+
+    private class LoadImage extends AsyncTask<String, String, Bitmap> {
+        ProgressDialog pDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(Login.this);
+            pDialog.setMessage("Saving Profile Picture ....");
+            pDialog.show();
+
+        }
+
+        protected Bitmap doInBackground(String... args) {
+            try {
+                profilePicture = BitmapFactory.decodeStream((InputStream) new URL(args[0]).getContent());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return profilePicture;
+        }
+
+        protected void onPostExecute(Bitmap image) {
+
+            if (image != null) {
+                saveInGallery(image, SAVE_PROFILE_PICTURE);
+                pDialog.dismiss();
+            } else {
+                pDialog.dismiss();
+                Toast.makeText(Login.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void saveInGallery(Bitmap img, int location) {
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir;
+        if (location == SAVE_PROFILE_PICTURE) {
+            myDir = new File(root + "/GreenBills/Profile");
+        } else {
+            myDir = new File(root + "/GreenBills/CompanyLogo");
+        }
+        myDir.mkdirs();
+        User user = new User();
+        List<User> list = new ArrayList<User>();
+        list = user.getAllUsers();
+
+        String fname = "profile" + list.size() + "_picture.jpg";
+        File file = new File(myDir, fname);
+
+        //Setting the photo path in ext. hard disk to the current user details
+        currentUser = new User();
+        currentUser.user_photoPath = myDir + fname;
+        /////////////////////////////////////
+
+        if (file.exists())
+            file.delete();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            img.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

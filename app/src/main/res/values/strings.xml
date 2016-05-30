@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Green Bills </string>
+    <string name="app_name">Green Bills Testing App</string>
     <string name="title_text">Google+ Sign-In</string>
     <!-- Sign-in status messages -->
     <string name="signed_in_fmt">Signed in as: %s</string>
@@ -54,4 +54,5 @@
     <string name="title_activity_profile">Profile</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_home_page">HomePage</string>
 </resources>

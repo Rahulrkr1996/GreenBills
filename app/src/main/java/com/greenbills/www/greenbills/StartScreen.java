@@ -21,4 +21,10 @@ public class StartScreen extends AppCompatActivity {
             }
         }, 1500);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
