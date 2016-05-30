@@ -154,13 +154,13 @@ public class Login extends AppCompatActivity implements
                 }
             } else {
                 if (currentUser == null) {
-                    currentUser = new User(1, acct.getDisplayName(), acct.getEmail(), acct.getPhotoUrl().toString());
+                    currentUser = new User(1, acct.getDisplayName(), acct.getEmail(),null);
                     currentUser.save();
                 } else {
                     currentUser.user_id = 1;
                     currentUser.user_name = acct.getDisplayName();
                     currentUser.user_email = acct.getEmail();
-                    currentUser.user_photoURL = acct.getPhotoUrl().toString();
+                    currentUser.user_photoURL = null;
                     currentUser.save();
                 }
             }
@@ -218,7 +218,7 @@ public class Login extends AppCompatActivity implements
     public void onConnectionFailed(ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
-        Toast.makeText(Login.this, "Login Failed!! Chec internet connectivity...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Login.this, "Login Failed!! Check internet connectivity...", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
     }
 
@@ -283,9 +283,9 @@ public class Login extends AppCompatActivity implements
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir;
         if (location == SAVE_PROFILE_PICTURE) {
-            myDir = new File(root + "/GreenBills/Profile");
+            myDir = new File(root + "/Green Bills/Profile");
         } else {
-            myDir = new File(root + "/GreenBills/CompanyLogo");
+            myDir = new File(root + "/Green Bills/CompanyLogo");
         }
         myDir.mkdirs();
         User user = new User();
