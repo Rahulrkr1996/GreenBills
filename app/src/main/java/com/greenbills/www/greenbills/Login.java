@@ -292,7 +292,7 @@ public class Login extends AppCompatActivity implements
         List<User> list = new ArrayList<User>();
         list = user.getAllUsers();
 
-        String fname = "profile" + list.size() + "_picture.jpg";
+        String fname = "profile_picture"+ list.size() +".jpg";
         File file = new File(myDir, fname);
 
         //Setting the photo path in ext. hard disk to the current user details
