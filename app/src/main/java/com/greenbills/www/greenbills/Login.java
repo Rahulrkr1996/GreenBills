@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -163,6 +165,10 @@ public class Login extends AppCompatActivity implements
                     currentUser.user_photoURL = null;
                     currentUser.save();
                 }
+                // Setting default image
+                Drawable myDrawable = getResources().getDrawable(R.drawable.logo_black);
+                Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+                saveInGallery(anImage,SAVE_PROFILE_PICTURE);
             }
 
             Toast.makeText(Login.this, "User details saved for " + currentUser.user_name, Toast.LENGTH_SHORT).show();
