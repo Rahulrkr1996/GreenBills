@@ -125,9 +125,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/BF_logoRetailer"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="2dp"
-        android:text="Smarter today for \n a Better tomorrow"
+        android:text="Smarter today for a Better tomorrow"
+        android:textSize="11dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000" />
 
@@ -140,8 +141,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/BF_slogan"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/textview_round_box" />
+        android:background="@drawable/textview_round_box"
+        android:layout_marginTop="2dp" />
 
     <EditText
         android:id="@+id/BF_nameInput"
@@ -389,6 +390,64 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/Black">
 
+        <TextView
+            android:id="@+id/BF_bank_cardNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Card No. : "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/Black"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/BF_bank_cardNoInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/BF_bank_cardNo"
+            android:layout_alignTop="@+id/BF_bank_cardNo"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/Black"
+            android:layout_marginLeft="2dp"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/BF_bank_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/BF_bank_cardNo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Bank : "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/Black"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/BF_bank_nameInput"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@+id/BF_bank_name"
+            android:layout_alignTop="@+id/BF_bank_name"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/Black"
+            android:layout_marginLeft="2dp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical|center_horizontal" />
+
     </RelativeLayout>
 
     <ImageView
@@ -412,14 +471,15 @@
 
 
         <TextView
+            android:id="@+id/BF_lowerLayoutHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/BF_lowerLayoutHeading"
-            android:text="Congratulations on Your purchase! Do come again."
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/White"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Congratulations on Your purchase! Do come again."
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/White" />
     </RelativeLayout>
+
 </RelativeLayout>
