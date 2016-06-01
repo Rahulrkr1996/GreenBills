@@ -9,6 +9,8 @@
     <color name="color_plus_uploads">#f567f321</color>
     <color name="color_plus_offers">#f521f34b</color>
 
-    <color name="bill_blue">#e6293f94</color>
+    <color name="bill_blue">#293f94</color>
     <color name="black_overlay">#66000000</color>
+    <color name="Black">#000000</color>
+    <color name="White">#FFFFFF</color>
 </resources>
