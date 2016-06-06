@@ -3,7 +3,7 @@
     <color name="colorPrimary">#410096</color>
     <color name="colorPrimaryDark">#303F9F</color>
 
-    <color name="colorAccent">#050505</color>
+    <color name="colorAccent">#ffffff</color>
     <color name="color_plus_new_bill">#f521f359</color>
     <color name="color_plus_cheque">#f52cf321</color>
     <color name="color_plus_uploads">#f567f321</color>

@@ -178,6 +178,7 @@ public class Login extends AppCompatActivity implements
 
                     Intent i = new Intent(Login.this, HomePage.class);
                     startActivity(i);
+                    finish();
                 }
             }, 1500);
         }

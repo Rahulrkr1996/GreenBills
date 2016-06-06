@@ -14,9 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 
@@ -24,6 +30,11 @@ public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ImageView homeSwipeHeaderImage;
+    private FloatingActionButton plus_main,plus_scan_qr,plus_scan_bill,plus_new_manual_expense,plus_add_cheque,plus_online_order;
+    private TextView plus_text_scan_qr,plus_text_scan_bill,plus_text_manual_expense,plus_text_add_cheque,plus_text_online_order;
+    private RelativeLayout home_main_layout;
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    private boolean isFabOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +44,34 @@ public class HomePage extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //Obtaining Views
+        plus_main = (FloatingActionButton)findViewById(R.id.plus_main);
+        plus_scan_qr  = (FloatingActionButton)findViewById(R.id.plus_scan_qr);
+        plus_scan_bill = (FloatingActionButton)findViewById(R.id.plus_scan_bill);
+        plus_new_manual_expense = (FloatingActionButton)findViewById(R.id.plus_new_manual_expense);
+        plus_add_cheque = (FloatingActionButton)findViewById(R.id.plus_add_cheque);
+        plus_online_order = (FloatingActionButton)findViewById(R.id.plus_online_order);
+
+        plus_text_scan_qr = (TextView)findViewById(R.id.plus_text_scan_qr);
+        plus_text_scan_bill = (TextView)findViewById(R.id.plus_text_scan_bill);
+        plus_text_manual_expense = (TextView)findViewById(R.id.plus_text_manual_expense);
+        plus_text_add_cheque = (TextView)findViewById(R.id.plus_text_add_cheque);
+        plus_text_online_order = (TextView)findViewById(R.id.plus_text_online_order);
+
+        home_main_layout = (RelativeLayout)findViewById(R.id.home_main_layout);
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+
+        plus_main.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                animateFAB();
             }
         });
-*/
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -119,4 +149,46 @@ public class HomePage extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void animateFAB(){
+
+        if(isFabOpen){
+
+            plus_main.startAnimation(rotate_backward);
+            plus_scan_qr.startAnimation(fab_close);
+            plus_scan_bill.startAnimation(fab_close);
+            plus_online_order.startAnimation(fab_close);
+            plus_add_cheque.startAnimation(fab_close);
+            plus_new_manual_expense.startAnimation(fab_close);
+
+            plus_scan_bill.setClickable(false);
+            plus_scan_qr.setClickable(false);
+            plus_online_order.setClickable(false);
+            plus_add_cheque.setClickable(false);
+            plus_new_manual_expense.setClickable(false);
+
+            isFabOpen = false;
+            home_main_layout.setVisibility(View.GONE);
+
+        } else {
+
+            plus_main.startAnimation(rotate_forward);
+            plus_scan_qr.startAnimation(fab_open);
+            plus_scan_bill.startAnimation(fab_open);
+            plus_online_order.startAnimation(fab_open);
+            plus_add_cheque.startAnimation(fab_open);
+            plus_new_manual_expense.startAnimation(fab_open);
+
+            plus_scan_bill.setClickable(true);
+            plus_scan_qr.setClickable(true);
+            plus_online_order.setClickable(true);
+            plus_add_cheque.setClickable(true);
+            plus_new_manual_expense.setClickable(true);
+
+            isFabOpen = true;
+            home_main_layout.setVisibility(View.VISIBLE);
+        }
+    }
+
+
 }
