@@ -11,9 +11,9 @@ import com.google.gson.annotations.Expose;
 @Table(name = "Items")
 public class Items extends Model {
 
-    @Expose
-    @Column(name = "item_id")
-    public int item_id;
+    //@Expose
+    //@Column(name = "item_id")
+    //public int item_id;
 
     @Expose
     @Column(name = "item_name")
@@ -31,21 +31,28 @@ public class Items extends Model {
     @Column(name = "item_amount")
     public double item_amount;
 
+    //@Expose
+    //@Column(name="bill")
+    //public Bill bill;
+
     public Items(String item_name, double item_qty, double item_cost) {
         this.item_name = item_name;
         this.item_qty = item_qty;
         this.item_cost = item_cost;
         this.item_amount = item_qty * item_cost ;
+        //this.bill=bill;
+
     }
 
-    public Items(int item_id, String item_name, double item_qty, double item_cost) {
+   /* public Items(int item_id, String item_name, double item_qty, double item_cost) {
         this.item_id = item_id;
         this.item_name = item_name;
         this.item_qty = item_qty;
         this.item_cost = item_cost;
         this.item_amount = item_qty * item_cost ;
+        //this.bill=bill;
     }
-
+*/
     public double getItem_amount(double item_qty,double item_cost) {
         return item_amount ;
     }

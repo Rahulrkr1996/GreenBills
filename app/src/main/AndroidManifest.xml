@@ -18,6 +18,9 @@
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.greenbills.wwww.greenbills.Models.Items, com.greenbills.wwww.greenbills.Models.Bill, com.greenbills.wwww.greenbills.Models.User" />
 
         <activity android:name=".StartScreen">
             <intent-filter>
@@ -31,6 +34,7 @@
             android:name=".HomePage"
             android:label="@string/title_activity_home_page"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ItemInput"/>
         <activity
             android:name=".BillFormat"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
